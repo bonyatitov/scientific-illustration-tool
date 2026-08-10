@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { SHAPE_MAP } from '@/lib/shape-library';
-import { STORAGE_KEY, type SavedProject, type SceneObject } from '@/lib/editor-types';
+import { STORAGE_KEY, sanitizeProject, type SavedProject, type SceneObject } from '@/lib/editor-types';
 
 export const CANVAS_SIZE = 4000;
 export const GRID_STEP = 34;
@@ -164,18 +164,27 @@ export function useEditor() {
       savedAt: new Date().toISOString(),
       objects,
     };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    } catch {
+      return null;
+    }
     setSavedAt(payload.savedAt);
     setHasSaved(true);
     return payload;
   }, [objects]);
 
   const loadProject = useCallback(() => {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    let raw: string | null = null;
+    try {
+      raw = localStorage.getItem(STORAGE_KEY);
+    } catch {
+      return null;
+    }
     if (!raw) return null;
     try {
-      const parsed = JSON.parse(raw) as SavedProject;
-      if (!Array.isArray(parsed.objects)) return null;
+      const parsed = sanitizeProject(JSON.parse(raw));
+      if (!parsed) return null;
       setObjects(parsed.objects);
       setSelectedId(null);
       setSavedAt(parsed.savedAt);

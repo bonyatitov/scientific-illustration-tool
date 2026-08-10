@@ -51,8 +51,9 @@ const EditorToolbar = ({ editor }: Props) => {
   };
 
   const doSave = () => {
-    saveProject();
-    toast.success('Проект сохранён', { description: `${objects.length} объектов в памяти браузера.` });
+    const res = saveProject();
+    if (res) toast.success('Проект сохранён', { description: `${objects.length} объектов в памяти браузера.` });
+    else toast.error('Не удалось сохранить — в браузере нет места');
   };
 
   const doLoad = () => {
