@@ -13,9 +13,8 @@ const Footer = () => (
           <b className="font-head text-base font-normal tracking-[-0.03em] text-foreground">Мембрана</b>
           <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">редактор схем</span>
         </div>
-        <p className="mt-3 max-w-sm text-xs leading-relaxed text-muted-foreground">
-          Векторный редактор научных иллюстраций. Работает в браузере, данные остаются у вас.
-        </p>
+        <p className="mt-3 max-w-sm text-xs leading-relaxed text-muted-foreground">Векторный редактор научных иллюстраций. Работает в браузере, данные остаются у вас.
+Разработчик: Титов Богдан</p>
       </div>
 
       <nav className="flex flex-wrap gap-6">
