@@ -160,7 +160,7 @@ export function useEditor() {
   /* ── localStorage ── */
   const saveProject = useCallback(() => {
     const payload: SavedProject = {
-      name: 'Мембрана — проект',
+      name: 'Нуклеотоша — проект',
       savedAt: new Date().toISOString(),
       objects,
     };

@@ -65,7 +65,7 @@ const EditorToolbar = ({ editor }: Props) => {
     <div className="flex h-14 shrink-0 items-center justify-between gap-4 border-b border-border bg-card px-4">
       <div className="flex items-center gap-3">
         <a href="#top" className="flex items-baseline gap-2">
-          <b className="font-head text-base font-normal tracking-[-0.03em] text-foreground">Мембрана</b>
+          <b className="font-head text-base font-normal tracking-[-0.03em] text-foreground">Нуклеотоша</b>
           <span className="hidden text-[10px] uppercase tracking-[0.2em] text-muted-foreground sm:inline">
             редактор схем
           </span>

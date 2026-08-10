@@ -95,7 +95,7 @@ export function exportSvg(liveSvg: SVGSVGElement | null, objects: SceneObject[],
   const svg = buildSvgString(liveSvg, objects, transparent ? null : '#0D1117');
   const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
   const url = URL.createObjectURL(blob);
-  download(url, `membrana-${Date.now()}.svg`);
+  download(url, `nucleotosha-${Date.now()}.svg`);
   setTimeout(() => URL.revokeObjectURL(url), 4000);
 }
 
@@ -129,7 +129,7 @@ export function exportPng(
           return;
         }
         const pngUrl = URL.createObjectURL(out);
-        download(pngUrl, `membrana-${Date.now()}.png`);
+        download(pngUrl, `nucleotosha-${Date.now()}.png`);
         setTimeout(() => URL.revokeObjectURL(pngUrl), 4000);
         resolve();
       }, 'image/png');

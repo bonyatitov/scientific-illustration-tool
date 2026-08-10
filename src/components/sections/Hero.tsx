@@ -23,7 +23,7 @@ const Hero = () => {
       {/* ── шапка ── */}
       <header className="absolute inset-x-0 top-0 z-[5] flex items-center justify-between border-b border-[var(--hero-x-rule)] px-6 py-5 md:px-12 md:py-[30px]">
         <div className="flex items-baseline gap-3">
-          <b className="font-head text-[1.05em] font-normal tracking-[-0.03em]">Мембрана</b>
+          <b className="font-head text-[1.05em] font-normal tracking-[-0.03em]">Нуклеотоша</b>
           <span className="text-[0.68em] uppercase tracking-[0.2em] text-[var(--hero-muted)]">
             редактор схем
           </span>
