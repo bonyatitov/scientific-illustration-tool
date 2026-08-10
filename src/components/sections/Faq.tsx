@@ -29,10 +29,10 @@ const QA = [
 ];
 
 const Faq = () => (
-  <section className="border-t border-border bg-card px-6 py-20 md:px-12 md:py-28">
+  <section id="faq" className="border-t border-border bg-card px-6 py-20 md:px-12 md:py-28">
     <div className="grid gap-12 lg:grid-cols-[380px_1fr]">
       <div>
-        <p className="rule-label">Раздел 06 — вопросы</p>
+        <p className="rule-label">Раздел 05 — вопросы</p>
         <h2 className="mt-4 font-head text-3xl font-light leading-[1.1] tracking-[-0.03em] text-foreground md:text-5xl">
           Сухие
           <br />

@@ -5,7 +5,7 @@ const NAV = [
   { href: '#canvas', label: 'Холст' },
   { href: '#lib', label: 'Библиотека' },
   { href: '#export', label: 'Экспорт' },
-  { href: '#price', label: 'Тарифы' },
+  { href: '#faq', label: 'Вопросы' },
 ];
 
 const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
