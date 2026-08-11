@@ -10,6 +10,8 @@ export interface ShapeDef {
   defaultFill: string;
   defaultStroke: string;
   isText?: boolean;
+  /** объект отрисовывается из импортированной SVG-разметки */
+  isImported?: boolean;
   defaultText?: string;
   defaultFontSize?: number;
   /** отрисовка в системе координат 0..100 × 0..100 */

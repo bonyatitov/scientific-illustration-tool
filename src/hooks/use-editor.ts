@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { SHAPE_MAP } from '@/lib/shape-library';
+import { SHAPE_MAP, IMPORTED_SHAPE } from '@/lib/shape-library';
+import { parseSvgFile } from '@/lib/import-svg';
 import { STORAGE_KEY, sanitizeProject, type SavedProject, type SceneObject } from '@/lib/editor-types';
 
 export const CANVAS_SIZE = 4000;
@@ -21,6 +22,7 @@ export function useEditor() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [view, setView] = useState<Viewport>({ zoom: 0.7, panX: 0, panY: 0 });
   const [showGrid, setShowGrid] = useState(true);
+  const [lightPaper, setLightPaper] = useState(false);
   const [snap, setSnap] = useState(true);
   const [savedAt, setSavedAt] = useState<string | null>(null);
   const [hasSaved, setHasSaved] = useState(false);
@@ -83,6 +85,37 @@ export function useEditor() {
       };
       setObjects((prev) => [...prev, obj]);
       setSelectedId(obj.id);
+    },
+    [viewportCenter],
+  );
+
+  const importSvg = useCallback(
+    (text: string, name?: string) => {
+      const parsed = parseSvgFile(text);
+      if (!parsed) return null;
+      const c = viewportCenter();
+      const maxSide = 420;
+      const k = Math.min(1, maxSide / Math.max(parsed.width, parsed.height));
+      const w = Math.max(24, Math.round(parsed.width * k));
+      const h = Math.max(24, Math.round(parsed.height * k));
+      const obj: SceneObject = {
+        id: uid(),
+        shapeId: IMPORTED_SHAPE.id,
+        label: name ? name.replace(/\.[^.]+$/, '').slice(0, 40) : IMPORTED_SHAPE.label,
+        x: Math.round(c.x - w / 2),
+        y: Math.round(c.y - h / 2),
+        width: w,
+        height: h,
+        rotation: 0,
+        fill: 'none',
+        stroke: 'none',
+        strokeWidth: 0,
+        opacity: 1,
+        svg: parsed.inner,
+      };
+      setObjects((prev) => [...prev, obj]);
+      setSelectedId(obj.id);
+      return obj;
     },
     [viewportCenter],
   );
@@ -204,6 +237,8 @@ export function useEditor() {
     setView,
     showGrid,
     setShowGrid,
+    lightPaper,
+    setLightPaper,
     snap,
     setSnap,
     savedAt,
@@ -211,6 +246,7 @@ export function useEditor() {
     viewportRef,
     svgRef,
     addShape,
+    importSvg,
     updateObject,
     removeObject,
     duplicateObject,

@@ -192,14 +192,26 @@ const PropertiesPanel = ({ editor }: Props) => {
           </div>
         )}
 
-        <div className="space-y-2 py-3">
-          <p className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-            {def?.isText ? 'Цвет текста' : 'Заливка'}
-          </p>
-          <ColorField value={selected.fill} onChange={(v) => updateObject(selected.id, { fill: v })} />
-        </div>
+        {def?.isImported && (
+          <div className="space-y-2 py-3">
+            <p className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">Импортированный рисунок</p>
+            <p className="text-xs leading-relaxed text-muted-foreground">
+              Цвета заданы в исходном файле. Меняйте размер, поворот и прозрачность — пропорции сохраняются при
+              равномерном масштабировании.
+            </p>
+          </div>
+        )}
 
-        {!def?.isText && (
+        {!def?.isImported && (
+          <div className="space-y-2 py-3">
+            <p className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+              {def?.isText ? 'Цвет текста' : 'Заливка'}
+            </p>
+            <ColorField value={selected.fill} onChange={(v) => updateObject(selected.id, { fill: v })} />
+          </div>
+        )}
+
+        {!def?.isText && !def?.isImported && (
           <div className="space-y-2 py-3">
             <p className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">Обводка</p>
             <ColorField value={selected.stroke} onChange={(v) => updateObject(selected.id, { stroke: v })} />

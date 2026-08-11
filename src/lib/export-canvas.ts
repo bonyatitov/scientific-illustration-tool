@@ -91,8 +91,13 @@ function download(url: string, filename: string) {
   a.remove();
 }
 
-export function exportSvg(liveSvg: SVGSVGElement | null, objects: SceneObject[], transparent: boolean) {
-  const svg = buildSvgString(liveSvg, objects, transparent ? null : '#0D1117');
+export function exportSvg(
+  liveSvg: SVGSVGElement | null,
+  objects: SceneObject[],
+  transparent: boolean,
+  bgColor = '#0D1117',
+) {
+  const svg = buildSvgString(liveSvg, objects, transparent ? null : bgColor);
   const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   download(url, `nucleotosha-${Date.now()}.svg`);
@@ -104,10 +109,11 @@ export function exportPng(
   objects: SceneObject[],
   transparent: boolean,
   scale = 2,
+  bgColor = '#0D1117',
 ): Promise<void> {
   return new Promise((resolve, reject) => {
     const b = sceneBounds(objects);
-    const svg = buildSvgString(liveSvg, objects, transparent ? null : '#0D1117');
+    const svg = buildSvgString(liveSvg, objects, transparent ? null : bgColor);
     const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const img = new Image();

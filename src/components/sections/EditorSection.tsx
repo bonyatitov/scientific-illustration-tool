@@ -72,6 +72,9 @@ const EditorSection = () => {
           <span className="hidden items-center gap-1.5 lg:flex">
             <Icon name="Delete" size={11} /> Del — удалить
           </span>
+          <span className="hidden items-center gap-1.5 xl:flex">
+            <Icon name="FilePlus2" size={11} /> Перетащите SVG — импорт
+          </span>
           {fullscreen && (
             <span className="flex items-center gap-1.5 text-primary">
               <Icon name="Minimize2" size={11} /> Esc — свернуть

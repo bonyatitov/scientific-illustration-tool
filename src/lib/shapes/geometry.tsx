@@ -1,5 +1,17 @@
 import { S, line, type ShapeDef } from './types';
 
+export const IMPORTED_SHAPE: ShapeDef = {
+  id: 'imported-svg',
+  label: 'Импорт из файла',
+  category: 'imported',
+  defaultWidth: 240,
+  defaultHeight: 200,
+  defaultFill: 'none',
+  defaultStroke: 'none',
+  isImported: true,
+  render: () => null,
+};
+
 export const GEOMETRY_SHAPES: ShapeDef[] = [
   {
     id: 'sh-rect',

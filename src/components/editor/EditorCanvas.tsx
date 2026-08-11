@@ -32,12 +32,13 @@ interface DragState {
 
 const EditorCanvas = ({ editor }: Props) => {
   const {
-    objects, selected, selectedId, setSelectedId, view, showGrid, snap,
+    objects, selected, selectedId, setSelectedId, view, showGrid, snap, lightPaper,
     viewportRef, svgRef, updateObject, removeObject, duplicateObject, zoomBy, panBy,
   } = editor;
 
   const drag = useRef<DragState | null>(null);
   const [spaceDown, setSpaceDown] = useState(false);
+  const [dropping, setDropping] = useState(false);
 
   /* колесо мыши — зум */
   useEffect(() => {
@@ -161,25 +162,45 @@ const EditorCanvas = ({ editor }: Props) => {
   };
 
   const zoomPct = Math.round(view.zoom * 100);
+  const accent = lightPaper ? '#1a7f5a' : 'var(--hero-accent)';
 
   return (
     <div
       ref={viewportRef}
-      className="relative h-full w-full overflow-hidden bg-background"
-      style={{ cursor: spaceDown ? 'grab' : 'default', touchAction: 'none' }}
+      className="relative h-full w-full overflow-hidden transition-colors"
+      style={{
+        cursor: spaceDown ? 'grab' : 'default',
+        touchAction: 'none',
+        background: lightPaper ? '#ffffff' : 'hsl(var(--background))',
+      }}
       onPointerDown={onBackgroundDown}
       onPointerMove={onPointerMove}
       onPointerUp={endDrag}
       onPointerLeave={endDrag}
       onContextMenu={(e) => e.preventDefault()}
+      onDragOver={(e) => {
+        e.preventDefault();
+        setDropping(true);
+      }}
+      onDragLeave={() => setDropping(false)}
+      onDrop={async (e) => {
+        e.preventDefault();
+        setDropping(false);
+        const file = e.dataTransfer.files?.[0];
+        if (!file) return;
+        if (!/\.svg$/i.test(file.name) && file.type !== 'image/svg+xml') return;
+        if (file.size > 4 * 1024 * 1024) return;
+        editor.importSvg(await file.text(), file.name);
+      }}
     >
       {/* сетка вьюпорта */}
       {showGrid && (
         <div
           className="pointer-events-none absolute inset-0 opacity-70"
           style={{
-            backgroundImage:
-              'linear-gradient(to right, var(--hero-x-grid) 1px, transparent 1px), linear-gradient(to bottom, var(--hero-x-grid) 1px, transparent 1px)',
+            backgroundImage: lightPaper
+              ? 'linear-gradient(to right, #dfe4ea 1px, transparent 1px), linear-gradient(to bottom, #dfe4ea 1px, transparent 1px)'
+              : 'linear-gradient(to right, var(--hero-x-grid) 1px, transparent 1px), linear-gradient(to bottom, var(--hero-x-grid) 1px, transparent 1px)',
             backgroundSize: `${GRID_STEP * view.zoom}px ${GRID_STEP * view.zoom}px`,
             backgroundPosition: `${view.panX}px ${view.panY}px`,
           }}
@@ -199,7 +220,7 @@ const EditorCanvas = ({ editor }: Props) => {
             width={CANVAS_SIZE}
             height={CANVAS_SIZE}
             fill="none"
-            stroke="var(--hero-x-rule)"
+            stroke={lightPaper ? '#c9d1da' : 'var(--hero-x-rule)'}
             strokeWidth={1 / view.zoom}
           />
           {objects.map((o) => (
@@ -249,7 +270,7 @@ const EditorCanvas = ({ editor }: Props) => {
                 width={selected.width}
                 height={selected.height}
                 fill="none"
-                stroke="var(--hero-accent)"
+                stroke={accent}
                 strokeWidth={1 / view.zoom}
               />
               <line
@@ -257,14 +278,14 @@ const EditorCanvas = ({ editor }: Props) => {
                 y1={selected.y}
                 x2={selected.x + selected.width / 2}
                 y2={selected.y - 26 / view.zoom}
-                stroke="var(--hero-accent)"
+                stroke={accent}
                 strokeWidth={1 / view.zoom}
               />
               <circle
                 cx={selected.x + selected.width / 2}
                 cy={selected.y - 26 / view.zoom}
                 r={5 / view.zoom}
-                fill="var(--hero-accent)"
+                fill={accent}
                 style={{ cursor: 'grab' }}
                 onPointerDown={(e) => startDrag(e, 'rotate')}
               />
@@ -281,7 +302,7 @@ const EditorCanvas = ({ editor }: Props) => {
                     y={hy - s / 2}
                     width={s}
                     height={s}
-                    fill="var(--hero-accent)"
+                    fill={accent}
                     style={{ cursor }}
                     onPointerDown={(e) => startDrag(e, 'resize', id)}
                   />
@@ -341,6 +362,14 @@ const EditorCanvas = ({ editor }: Props) => {
         </button>
         <button
           type="button"
+          onClick={() => editor.setLightPaper(!lightPaper)}
+          title="Белый холст — как в статье или презентации"
+          className={`flex h-7 items-center gap-1.5 px-2 text-[11px] uppercase tracking-[0.1em] transition-colors hover:bg-secondary ${lightPaper ? 'text-primary' : 'text-muted-foreground'}`}
+        >
+          <Icon name={lightPaper ? 'Sun' : 'Moon'} size={13} /> {lightPaper ? 'Бумага' : 'Тёмный'}
+        </button>
+        <button
+          type="button"
           onClick={() => editor.setSnap(!snap)}
           className={`flex h-7 items-center gap-1.5 px-2 text-[11px] uppercase tracking-[0.1em] transition-colors hover:bg-secondary ${snap ? 'text-primary' : 'text-muted-foreground'}`}
         >
@@ -348,11 +377,19 @@ const EditorCanvas = ({ editor }: Props) => {
         </button>
       </div>
 
+      {dropping && (
+        <div className="pointer-events-none absolute inset-3 z-20 flex items-center justify-center border-2 border-dashed border-primary bg-primary/10">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
+            Отпустите — вставим SVG на холст
+          </p>
+        </div>
+      )}
+
       {objects.length === 0 && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <div className="max-w-xs text-center">
-            <p className="font-head text-lg font-light text-foreground">Холст пуст</p>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            <p className={`font-head text-lg font-light ${lightPaper ? 'text-[#1f2937]' : 'text-foreground'}`}>Холст пуст</p>
+            <p className={`mt-2 text-sm leading-relaxed ${lightPaper ? 'text-[#5b6672]' : 'text-muted-foreground'}`}>
               Выберите элемент в библиотеке слева — он появится в центре холста.
             </p>
           </div>

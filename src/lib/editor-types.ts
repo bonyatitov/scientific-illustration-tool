@@ -1,4 +1,6 @@
-export type CategoryId = 'cells' | 'molecules' | 'arrows' | 'text' | 'shapes';
+import { sanitizeSvgMarkup } from './import-svg';
+
+export type CategoryId = 'cells' | 'molecules' | 'arrows' | 'text' | 'shapes' | 'imported';
 
 export interface SceneObject {
   id: string;
@@ -16,6 +18,8 @@ export interface SceneObject {
   /** только для текстовых объектов */
   text?: string;
   fontSize?: number;
+  /** только для импортированных SVG (ChemDraw и т.п.) — очищенная разметка */
+  svg?: string;
 }
 
 export interface SavedProject {
@@ -65,6 +69,10 @@ export function sanitizeObject(raw: unknown, index: number): SceneObject | null 
     opacity: num(o.opacity, 1, 0, 1),
     text: o.text === undefined ? undefined : str(o.text, '', 500),
     fontSize: o.fontSize === undefined ? undefined : num(o.fontSize, 20, 4, 400),
+    svg:
+      typeof o.svg === 'string' && o.svg.length <= 400000
+        ? sanitizeSvgMarkup(o.svg)
+        : undefined,
   };
 }
 

@@ -14,6 +14,17 @@ const ObjectView = ({ object }: Props) => {
   const cy = object.height / 2;
   const outer = `translate(${object.x} ${object.y}) rotate(${object.rotation} ${cx} ${cy})`;
 
+  if (def.isImported) {
+    return (
+      <g transform={outer} opacity={object.opacity}>
+        <g
+          transform={`scale(${object.width / 100} ${object.height / 100})`}
+          dangerouslySetInnerHTML={{ __html: object.svg ?? '' }}
+        />
+      </g>
+    );
+  }
+
   if (def.isText) {
     const size = object.fontSize ?? 20;
     return (

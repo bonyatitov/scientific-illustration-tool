@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
 import {
@@ -32,15 +32,32 @@ const btn =
   'flex h-9 items-center gap-2 border border-border px-3 text-[11px] uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:border-primary hover:text-foreground disabled:opacity-40 disabled:hover:border-border disabled:hover:text-muted-foreground';
 
 const EditorToolbar = ({ editor, fullscreen = false, onToggleFullscreen }: Props) => {
-  const { objects, svgRef, saveProject, loadProject, clearCanvas, hasSaved, savedAt } = editor;
+  const { objects, svgRef, saveProject, loadProject, clearCanvas, hasSaved, savedAt, lightPaper, importSvg } = editor;
   const [confirmClear, setConfirmClear] = useState(false);
   const [transparent, setTransparent] = useState(false);
+  const fileRef = useRef<HTMLInputElement | null>(null);
+
+  const doImport = async (file: File) => {
+    if (file.size > 4 * 1024 * 1024) {
+      toast.error('Файл слишком большой', { description: 'Максимум 4 МБ.' });
+      return;
+    }
+    const text = await file.text();
+    const res = importSvg(text, file.name);
+    if (res) {
+      toast.success('Рисунок добавлен', { description: 'Можно двигать, вращать и масштабировать как обычный элемент.' });
+    } else {
+      toast.error('Не удалось прочитать файл', {
+        description: 'Нужен SVG. В ChemDraw: File → Save As → SVG.',
+      });
+    }
+  };
 
   const empty = objects.length === 0;
 
   const doPng = async () => {
     try {
-      await exportPng(svgRef.current, objects, transparent, 2);
+      await exportPng(svgRef.current, objects, transparent, 2, lightPaper ? '#FFFFFF' : '#0D1117');
       toast.success('PNG сохранён', { description: 'Файл ушёл в загрузки браузера.' });
     } catch {
       toast.error('Не удалось собрать PNG');
@@ -48,7 +65,7 @@ const EditorToolbar = ({ editor, fullscreen = false, onToggleFullscreen }: Props
   };
 
   const doSvg = () => {
-    exportSvg(svgRef.current, objects, transparent);
+    exportSvg(svgRef.current, objects, transparent, lightPaper ? '#FFFFFF' : '#0D1117');
     toast.success('SVG сохранён', { description: 'Вектор готов для статьи.' });
   };
 
@@ -81,6 +98,26 @@ const EditorToolbar = ({ editor, fullscreen = false, onToggleFullscreen }: Props
       </div>
 
       <div className="flex items-center gap-2">
+        <input
+          ref={fileRef}
+          type="file"
+          accept=".svg,image/svg+xml"
+          className="hidden"
+          onChange={(e) => {
+            const f = e.target.files?.[0];
+            if (f) doImport(f);
+            e.target.value = '';
+          }}
+        />
+        <button
+          type="button"
+          className={btn}
+          onClick={() => fileRef.current?.click()}
+          title="Импорт SVG — например структура из ChemDraw"
+        >
+          <Icon name="FilePlus2" size={14} />
+          <span className="hidden lg:inline">Импорт SVG</span>
+        </button>
         <button type="button" className={btn} onClick={doSave} disabled={empty}>
           <Icon name="Save" size={14} />
           <span className="hidden lg:inline">Сохранить</span>
