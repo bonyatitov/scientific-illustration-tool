@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useState } from 'react';
 import { useEditor } from '@/hooks/use-editor';
 import EditorToolbar from '@/components/editor/EditorToolbar';
 import LibraryPanel from '@/components/editor/LibraryPanel';
@@ -7,6 +8,27 @@ import Icon from '@/components/ui/icon';
 
 const EditorSection = () => {
   const editor = useEditor();
+  const [fullscreen, setFullscreen] = useState(false);
+
+  const toggleFullscreen = useCallback(() => setFullscreen((v) => !v), []);
+
+  useEffect(() => {
+    if (!fullscreen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !editor.selectedId) setFullscreen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [fullscreen, editor.selectedId]);
+
+  const shell = fullscreen
+    ? 'fixed inset-0 z-50 flex flex-col border-0 bg-card'
+    : 'mx-6 mb-16 flex h-[760px] flex-col border border-border bg-card md:mx-12';
 
   return (
     <section id="canvas" className="border-t border-border bg-background">
@@ -24,8 +46,8 @@ const EditorSection = () => {
         </p>
       </div>
 
-      <div className="mx-6 mb-16 flex h-[760px] flex-col border border-border bg-card md:mx-12">
-        <EditorToolbar editor={editor} />
+      <div className={shell}>
+        <EditorToolbar editor={editor} fullscreen={fullscreen} onToggleFullscreen={toggleFullscreen} />
         <div className="flex min-h-0 flex-1">
           <div className="hidden md:flex">
             <LibraryPanel onAdd={editor.addShape} />
@@ -50,6 +72,11 @@ const EditorSection = () => {
           <span className="hidden items-center gap-1.5 lg:flex">
             <Icon name="Delete" size={11} /> Del — удалить
           </span>
+          {fullscreen && (
+            <span className="flex items-center gap-1.5 text-primary">
+              <Icon name="Minimize2" size={11} /> Esc — свернуть
+            </span>
+          )}
         </div>
       </div>
 

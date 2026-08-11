@@ -24,12 +24,14 @@ import type { EditorApi } from '@/hooks/use-editor';
 
 interface Props {
   editor: EditorApi;
+  fullscreen?: boolean;
+  onToggleFullscreen?: () => void;
 }
 
 const btn =
   'flex h-9 items-center gap-2 border border-border px-3 text-[11px] uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:border-primary hover:text-foreground disabled:opacity-40 disabled:hover:border-border disabled:hover:text-muted-foreground';
 
-const EditorToolbar = ({ editor }: Props) => {
+const EditorToolbar = ({ editor, fullscreen = false, onToggleFullscreen }: Props) => {
   const { objects, svgRef, saveProject, loadProject, clearCanvas, hasSaved, savedAt } = editor;
   const [confirmClear, setConfirmClear] = useState(false);
   const [transparent, setTransparent] = useState(false);
@@ -91,6 +93,17 @@ const EditorToolbar = ({ editor }: Props) => {
           <Icon name="Eraser" size={14} />
           <span className="hidden lg:inline">Очистить</span>
         </button>
+        {onToggleFullscreen && (
+          <button
+            type="button"
+            className={btn}
+            onClick={onToggleFullscreen}
+            title={fullscreen ? 'Свернуть холст (Esc)' : 'Развернуть холст на весь экран'}
+          >
+            <Icon name={fullscreen ? 'Minimize2' : 'Maximize2'} size={14} />
+            <span className="hidden lg:inline">{fullscreen ? 'Свернуть' : 'Во весь экран'}</span>
+          </button>
+        )}
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
