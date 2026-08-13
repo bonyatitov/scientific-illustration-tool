@@ -97,6 +97,22 @@ const CtaSection = () => {
               </p>
             </form>
           )}
+
+          <div className="mt-8 border-t border-border pt-6">
+            <p className="rule-label">Связаться напрямую</p>
+            <a
+              href="https://vk.com/bonyatitov"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-flex items-center gap-2 text-sm text-foreground underline-offset-4 transition-colors hover:text-primary hover:underline"
+            >
+              <Icon name="MessageCircle" size={15} />
+              ВКонтакте · @bonyatitov
+            </a>
+            <p className="mt-2 text-xs text-muted-foreground">
+              Богдан Титов, разработчик. Пишите по багам, идеям и сотрудничеству.
+            </p>
+          </div>
         </div>
       </div>
     </section>

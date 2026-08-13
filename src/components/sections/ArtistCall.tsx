@@ -67,19 +67,29 @@ const ArtistCall = () => (
           </p>
         </div>
 
-        <a
-          href="#cta"
-          onClick={(e) => {
-            e.preventDefault();
-            document.querySelector('#cta')?.scrollIntoView({ behavior: 'smooth' });
-          }}
-          className="mt-8 inline-flex h-14 items-center gap-3 bg-primary px-8 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary-foreground transition-transform hover:-translate-y-0.5"
-        >
-          <Icon name="Send" size={16} />
-          Оставить контакт
-        </a>
+        <div className="mt-8 flex flex-wrap items-center gap-3">
+          <a
+            href="https://vk.com/bonyatitov"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-14 items-center gap-3 bg-primary px-8 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary-foreground transition-transform hover:-translate-y-0.5"
+          >
+            <Icon name="MessageCircle" size={16} />
+            Написать во ВКонтакте
+          </a>
+          <a
+            href="#cta"
+            onClick={(e) => {
+              e.preventDefault();
+              document.querySelector('#cta')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="inline-flex h-14 items-center gap-3 border border-border px-6 text-[11px] uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:border-primary hover:text-foreground"
+          >
+            Оставить почту
+          </a>
+        </div>
         <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-          Достаточно двух-трёх работ в портфолио
+          Богдан Титов · vk.com/bonyatitov · достаточно двух-трёх работ
         </p>
       </div>
 

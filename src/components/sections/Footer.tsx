@@ -1,3 +1,5 @@
+import Icon from '@/components/ui/icon';
+
 const LINKS = [
   { href: '#canvas', label: 'Холст' },
   { href: '#lib', label: 'Библиотека' },
@@ -14,8 +16,22 @@ const Footer = () => (
           <b className="font-head text-base font-normal tracking-[-0.03em] text-foreground">Нуклеотоша</b>
           <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">редактор схем</span>
         </div>
-        <p className="mt-3 max-w-sm text-xs leading-relaxed text-muted-foreground">Векторный редактор научных иллюстраций. Работает в браузере, данные остаются у вас.
-Разработчик: Титов Богдан</p>
+        <p className="mt-3 max-w-sm text-xs leading-relaxed text-muted-foreground">
+          Векторный редактор научных иллюстраций. Работает в браузере, данные остаются у вас.
+        </p>
+        <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
+          <span>Разработчик: Титов Богдан</span>
+          <span className="text-[var(--hero-x-membrane)]">·</span>
+          <a
+            href="https://vk.com/bonyatitov"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-foreground underline-offset-4 transition-colors hover:text-primary hover:underline"
+          >
+            <Icon name="MessageCircle" size={13} />
+            @bonyatitov
+          </a>
+        </p>
       </div>
 
       <nav className="flex flex-wrap gap-6">
