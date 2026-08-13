@@ -1,6 +1,6 @@
 import { sanitizeSvgMarkup } from './import-svg';
 
-export type CategoryId = 'cells' | 'molecules' | 'arrows' | 'text' | 'shapes' | 'imported';
+export type CategoryId = 'cells' | 'molecules' | 'lab' | 'arrows' | 'text' | 'shapes' | 'imported';
 
 export interface SceneObject {
   id: string;

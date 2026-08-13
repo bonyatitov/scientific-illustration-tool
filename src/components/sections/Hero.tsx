@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
+import { SHAPES } from '@/lib/shape-library';
 
 const NAV = [
   { href: '#canvas', label: 'Холст' },
   { href: '#lib', label: 'Библиотека' },
   { href: '#export', label: 'Экспорт' },
+  { href: '#artist', label: 'Художнику' },
   { href: '#faq', label: 'Вопросы' },
 ];
 
@@ -161,7 +163,7 @@ const Hero = () => {
           <em>а не за вечер</em>
         </h1>
         <p className="hero-lead">
-          240&nbsp;элементов: клетки, молекулы, стрелки. Тянете мышью, меняете заливку, выгружаете PNG или&nbsp;SVG для статьи.
+          {SHAPES.length}&nbsp;элементов: клетки, молекулы, лабораторная посуда, стрелки. Тянете мышью, меняете заливку, выгружаете PNG или&nbsp;SVG для статьи.
         </p>
         <div className="hero-act">
           <a href="#canvas" onClick={(e) => scrollTo(e, '#canvas')} className="hero-btn">

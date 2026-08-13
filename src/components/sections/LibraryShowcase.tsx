@@ -29,7 +29,7 @@ const LibraryShowcase = () => {
         <div>
           <p className="rule-label">Раздел 02 — библиотека</p>
           <h2 className="mt-4 font-head text-3xl font-light leading-[1.1] tracking-[-0.03em] text-foreground md:text-5xl">
-            Пять полок,
+            Шесть полок,
             <br />
             ни одной лишней
           </h2>

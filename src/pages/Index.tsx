@@ -3,6 +3,7 @@ import EditorSection from '@/components/sections/EditorSection';
 import LibraryShowcase from '@/components/sections/LibraryShowcase';
 import Features from '@/components/sections/Features';
 import ExportSection from '@/components/sections/ExportSection';
+import ArtistCall from '@/components/sections/ArtistCall';
 import Faq from '@/components/sections/Faq';
 import CtaSection from '@/components/sections/CtaSection';
 import Footer from '@/components/sections/Footer';
@@ -14,6 +15,7 @@ const Index = () => (
     <LibraryShowcase />
     <Features />
     <ExportSection />
+    <ArtistCall />
     <Faq />
     <CtaSection />
     <Footer />

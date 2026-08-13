@@ -20,7 +20,7 @@ const CtaSection = () => {
   };
 
   return (
-    <section className="relative overflow-hidden border-t border-border bg-background px-6 py-24 md:px-12 md:py-32">
+    <section id="cta" className="relative overflow-hidden border-t border-border bg-background px-6 py-24 md:px-12 md:py-32">
       <div
         className="pointer-events-none absolute inset-0 opacity-70"
         style={{
@@ -62,6 +62,7 @@ const CtaSection = () => {
           <p className="rule-label">Лист ожидания «Лаборатории»</p>
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
             Пришлём одно письмо, когда появятся неограниченные проекты и свои элементы.
+            Художники — оставляйте адрес здесь же, ответим лично.
           </p>
           {sent ? (
             <div className="mt-8 flex items-center gap-3 border border-primary/40 bg-primary/10 px-4 py-4">

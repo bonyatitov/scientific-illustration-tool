@@ -1,7 +1,8 @@
 import type { CategoryId } from './editor-types';
 import { CELL_SHAPES } from './shapes/cells';
 import { MOLECULE_SHAPES } from './shapes/molecules';
-import { ARROW_SHAPES, TEXT_SHAPES } from './shapes/arrows-text';
+import { LAB_SHAPES } from './shapes/lab';
+import { ARROW_SHAPES, EXTRA_ARROW_SHAPES, TEXT_SHAPES } from './shapes/arrows-text';
 import { GEOMETRY_SHAPES, IMPORTED_SHAPE } from './shapes/geometry';
 import type { ShapeDef } from './shapes/types';
 
@@ -11,7 +12,9 @@ export type { ShapeDef, CategoryDef } from './shapes/types';
 export const SHAPES: ShapeDef[] = [
   ...CELL_SHAPES,
   ...MOLECULE_SHAPES,
+  ...LAB_SHAPES,
   ...ARROW_SHAPES,
+  ...EXTRA_ARROW_SHAPES,
   ...TEXT_SHAPES,
   ...GEOMETRY_SHAPES,
 ];

@@ -121,6 +121,148 @@ export const CELL_SHAPES: ShapeDef[] = [
     ),
   },
   {
+    id: 'cell-nucleus',
+    label: 'Ядро',
+    category: 'cells',
+    defaultWidth: 170,
+    defaultHeight: 170,
+    defaultFill: '#1c2430',
+    defaultStroke: '#8f9fb8',
+    render: (o) => (
+      <>
+        <circle cx="50" cy="50" r="46" {...S(o)} />
+        <circle cx="50" cy="50" r="40" fill="none" stroke={o.stroke} strokeWidth={o.strokeWidth * 0.7} />
+        <circle cx="42" cy="44" r="12" fill={o.stroke} opacity="0.45" />
+        <circle cx="64" cy="62" r="5" fill={o.stroke} opacity="0.3" />
+        {[0, 60, 120, 180, 240, 300].map((a) => {
+          const r = (a * Math.PI) / 180;
+          return (
+            <circle key={a} cx={50 + Math.cos(r) * 43} cy={50 + Math.sin(r) * 43} r="3" fill={o.stroke} />
+          );
+        })}
+      </>
+    ),
+  },
+  {
+    id: 'cell-chloroplast',
+    label: 'Хлоропласт',
+    category: 'cells',
+    defaultWidth: 220,
+    defaultHeight: 130,
+    defaultFill: '#16261d',
+    defaultStroke: '#6fbf7d',
+    render: (o) => (
+      <>
+        <ellipse cx="50" cy="50" rx="47" ry="30" {...S(o)} />
+        {[26, 42, 58, 74].map((x, i) => (
+          <g key={i}>
+            <rect x={x - 5} y={i % 2 ? 32 : 44} width="10" height="22" rx="3" fill={o.stroke} opacity="0.5" />
+            <path d={`M${x - 5} ${(i % 2 ? 32 : 44) + 7} H${x + 5} M${x - 5} ${(i % 2 ? 32 : 44) + 14} H${x + 5}`} {...line(o)} strokeWidth={o.strokeWidth * 0.5} />
+          </g>
+        ))}
+      </>
+    ),
+  },
+  {
+    id: 'cell-golgi',
+    label: 'Аппарат Гольджи',
+    category: 'cells',
+    defaultWidth: 220,
+    defaultHeight: 150,
+    defaultFill: 'none',
+    defaultStroke: '#c98fd8',
+    render: (o) => (
+      <>
+        {[0, 1, 2, 3].map((i) => (
+          <path
+            key={i}
+            d={`M${16 + i * 3} ${30 + i * 12} q34 ${-16 + i * 2} ${68 - i * 6} 0`}
+            {...line(o)}
+            strokeWidth={o.strokeWidth * 1.6}
+          />
+        ))}
+        <circle cx="20" cy="86" r="4" fill={o.stroke} opacity="0.6" />
+        <circle cx="82" cy="86" r="3" fill={o.stroke} opacity="0.6" />
+      </>
+    ),
+  },
+  {
+    id: 'cell-er',
+    label: 'ЭПР',
+    category: 'cells',
+    defaultWidth: 230,
+    defaultHeight: 150,
+    defaultFill: 'none',
+    defaultStroke: '#8fa8c8',
+    render: (o) => (
+      <>
+        <path d="M6 24 q24 14 48 0 t40 0" {...line(o)} strokeWidth={o.strokeWidth * 1.5} />
+        <path d="M6 48 q24 14 48 0 t40 0" {...line(o)} strokeWidth={o.strokeWidth * 1.5} />
+        <path d="M6 72 q24 14 48 0 t40 0" {...line(o)} strokeWidth={o.strokeWidth * 1.5} />
+        {[14, 34, 54, 74].map((x, i) => (
+          <g key={i}>
+            <circle cx={x} cy="18" r="2.5" fill={o.stroke} />
+            <circle cx={x + 8} cy="42" r="2.5" fill={o.stroke} />
+            <circle cx={x} cy="66" r="2.5" fill={o.stroke} />
+          </g>
+        ))}
+      </>
+    ),
+  },
+  {
+    id: 'cell-stem',
+    label: 'Стволовая клетка',
+    category: 'cells',
+    defaultWidth: 170,
+    defaultHeight: 170,
+    defaultFill: '#1a2430',
+    defaultStroke: '#7fd6d0',
+    render: (o) => (
+      <>
+        <circle cx="50" cy="50" r="44" {...S(o)} />
+        <circle cx="50" cy="50" r="20" fill={o.stroke} opacity="0.35" />
+        <circle cx="50" cy="50" r="8" fill={o.stroke} opacity="0.7" />
+        <circle cx="50" cy="50" r="44" fill="none" stroke={o.stroke} strokeWidth={o.strokeWidth * 0.6} strokeDasharray="2 5" />
+      </>
+    ),
+  },
+  {
+    id: 'cell-macrophage',
+    label: 'Макрофаг',
+    category: 'cells',
+    defaultWidth: 210,
+    defaultHeight: 190,
+    defaultFill: '#221c2e',
+    defaultStroke: '#9d8fd8',
+    render: (o) => (
+      <>
+        <path
+          d="M22 34 C 6 26, 14 8, 32 16 C 44 2, 66 6, 70 20 C 92 18, 98 42, 84 52 C 96 68, 78 92, 60 84 C 46 98, 22 92, 22 74 C 4 66, 6 44, 22 34 Z"
+          {...S(o)}
+        />
+        <circle cx="46" cy="50" r="14" fill={o.stroke} opacity="0.45" />
+        <circle cx="68" cy="64" r="5" fill={o.stroke} opacity="0.3" />
+      </>
+    ),
+  },
+  {
+    id: 'cell-yeast',
+    label: 'Дрожжевая клетка',
+    category: 'cells',
+    defaultWidth: 190,
+    defaultHeight: 160,
+    defaultFill: '#2a2519',
+    defaultStroke: '#d8bd6f',
+    render: (o) => (
+      <>
+        <circle cx="40" cy="56" r="34" {...S(o)} />
+        <circle cx="80" cy="28" r="17" {...S(o)} />
+        <circle cx="36" cy="52" r="11" fill={o.stroke} opacity="0.45" />
+        <circle cx="80" cy="26" r="5" fill={o.stroke} opacity="0.45" />
+      </>
+    ),
+  },
+  {
     id: 'cell-rbc',
     label: 'Эритроцит',
     category: 'cells',

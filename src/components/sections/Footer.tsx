@@ -2,6 +2,7 @@ const LINKS = [
   { href: '#canvas', label: 'Холст' },
   { href: '#lib', label: 'Библиотека' },
   { href: '#export', label: 'Экспорт' },
+  { href: '#artist', label: 'Художнику' },
   { href: '#faq', label: 'Вопросы' },
 ];
 

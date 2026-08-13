@@ -28,6 +28,7 @@ export interface CategoryDef {
 export const CATEGORIES: CategoryDef[] = [
   { id: 'cells', label: 'Клетки', icon: 'CircleDot', hint: 'Клетки и органеллы' },
   { id: 'molecules', label: 'Молекулы', icon: 'Atom', hint: 'ДНК, белки, липиды' },
+  { id: 'lab', label: 'Лаборатория', icon: 'FlaskConical', hint: 'Посуда и приборы' },
   { id: 'arrows', label: 'Стрелки / Связи', icon: 'MoveRight', hint: 'Потоки и ингибирование' },
   { id: 'text', label: 'Текст', icon: 'Type', hint: 'Подписи и заголовки' },
   { id: 'shapes', label: 'Фигуры', icon: 'Shapes', hint: 'Базовая геометрия' },
