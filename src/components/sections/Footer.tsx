@@ -1,4 +1,5 @@
 import Icon from '@/components/ui/icon';
+import Peacock from '@/components/ui/peacock';
 
 const LINKS = [
   { href: '#canvas', label: 'Холст' },
@@ -12,9 +13,12 @@ const Footer = () => (
   <footer className="border-t border-border bg-background px-6 py-10 md:px-12">
     <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
       <div>
-        <div className="flex items-baseline gap-3">
-          <b className="font-head text-base font-normal tracking-[-0.03em] text-foreground">Нуклеотоша</b>
-          <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">редактор схем</span>
+        <div className="flex items-center gap-2.5">
+          <Peacock className="h-8 w-8 shrink-0" title="Нуклеотоша" />
+          <div className="flex items-baseline gap-3">
+            <b className="font-head text-base font-normal tracking-[-0.03em] text-foreground">Нуклеотоша</b>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">редактор схем</span>
+          </div>
         </div>
         <p className="mt-3 max-w-sm text-xs leading-relaxed text-muted-foreground">
           Векторный редактор научных иллюстраций. Работает в браузере, данные остаются у вас.

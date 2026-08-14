@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
+import Peacock from '@/components/ui/peacock';
 import { SHAPES } from '@/lib/shape-library';
 
 const NAV = [
@@ -24,11 +25,14 @@ const Hero = () => {
 
       {/* ── шапка ── */}
       <header className="absolute inset-x-0 top-0 z-[5] flex items-center justify-between border-b border-[var(--hero-x-rule)] px-6 py-5 md:px-12 md:py-[30px]">
-        <div className="flex items-baseline gap-3">
-          <b className="font-head text-[1.05em] font-normal tracking-[-0.03em]">Нуклеотоша</b>
-          <span className="text-[0.68em] uppercase tracking-[0.2em] text-[var(--hero-muted)]">
-            редактор схем
-          </span>
+        <div className="flex items-center gap-2.5">
+          <Peacock className="h-9 w-9 shrink-0" title="Нуклеотоша" />
+          <div className="flex items-baseline gap-3">
+            <b className="font-head text-[1.05em] font-normal tracking-[-0.03em]">Нуклеотоша</b>
+            <span className="hidden text-[0.68em] uppercase tracking-[0.2em] text-[var(--hero-muted)] sm:inline">
+              редактор схем
+            </span>
+          </div>
         </div>
 
         <nav className="hidden items-center gap-[30px] md:flex">
