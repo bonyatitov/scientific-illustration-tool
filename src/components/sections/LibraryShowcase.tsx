@@ -1,22 +1,8 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
-import { CATEGORIES, shapesByCategory, type ShapeDef } from '@/lib/shape-library';
-import type { CategoryId, SceneObject } from '@/lib/editor-types';
-
-const preview = (def: ShapeDef): SceneObject => ({
-  id: 'p',
-  shapeId: def.id,
-  label: def.label,
-  x: 0,
-  y: 0,
-  width: 100,
-  height: 100,
-  rotation: 0,
-  fill: def.defaultFill,
-  stroke: def.defaultStroke,
-  strokeWidth: 2,
-  opacity: 1,
-});
+import { CATEGORIES, shapesByCategory } from '@/lib/shape-library';
+import ShapePreview from '@/components/editor/ShapePreview';
+import type { CategoryId } from '@/lib/editor-types';
 
 const LibraryShowcase = () => {
   const [active, setActive] = useState<CategoryId>('cells');
@@ -78,9 +64,10 @@ const LibraryShowcase = () => {
                       {def.defaultText}
                     </span>
                   ) : (
-                    <svg viewBox="-6 -6 112 112" className="h-24 w-24 transition-transform duration-300 group-hover:scale-110">
-                      {def.render(preview(def))}
-                    </svg>
+                    <ShapePreview
+                      def={def}
+                      className="h-24 w-24 transition-transform duration-300 group-hover:scale-110"
+                    />
                   )}
                 </div>
                 <span className="text-center text-[11px] uppercase tracking-[0.1em] text-muted-foreground">

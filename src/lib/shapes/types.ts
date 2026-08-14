@@ -12,6 +12,8 @@ export interface ShapeDef {
   isText?: boolean;
   /** объект отрисовывается из импортированной SVG-разметки */
   isImported?: boolean;
+  /** стартовый изгиб по дуге, градусы */
+  defaultBend?: number;
   defaultText?: string;
   defaultFontSize?: number;
   /** отрисовка в системе координат 0..100 × 0..100 */

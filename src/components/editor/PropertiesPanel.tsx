@@ -173,6 +173,51 @@ const PropertiesPanel = ({ editor }: Props) => {
           </div>
         </div>
 
+        {!def?.isText && (
+          <div className="py-3">
+            <Row label="Изгиб">
+              <NumInput
+                value={selected.bend ?? 0}
+                onChange={(v) => updateObject(selected.id, { bend: Math.max(-350, Math.min(350, v)) })}
+                suffix="°"
+              />
+            </Row>
+            <Slider
+              value={[selected.bend ?? 0]}
+              min={-350}
+              max={350}
+              step={1}
+              onValueChange={([v]) => updateObject(selected.id, { bend: v })}
+              className="mt-1"
+            />
+            <div className="mt-3 flex gap-1">
+              {[
+                { v: -180, t: '⌒' },
+                { v: -90, t: '◜' },
+                { v: 0, t: '—' },
+                { v: 90, t: '◟' },
+                { v: 180, t: '⌣' },
+                { v: 350, t: '◯' },
+              ].map((b) => (
+                <button
+                  key={b.v}
+                  type="button"
+                  onClick={() => updateObject(selected.id, { bend: b.v })}
+                  title={b.v === 0 ? 'Без изгиба' : `${b.v}°`}
+                  className={`flex-1 border py-1 text-[13px] leading-none transition-colors hover:border-primary hover:text-foreground ${
+                    (selected.bend ?? 0) === b.v ? 'border-primary text-primary' : 'border-border text-muted-foreground'
+                  }`}
+                >
+                  {b.t}
+                </button>
+              ))}
+            </div>
+            <p className="mt-2 text-[10px] leading-relaxed text-muted-foreground">
+              Гнёт элемент по дуге — например бислой вокруг клетки.
+            </p>
+          </div>
+        )}
+
         {def?.isText && (
           <div className="space-y-2 py-3">
             <p className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">Текст</p>

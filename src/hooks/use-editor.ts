@@ -82,6 +82,7 @@ export function useEditor() {
         opacity: 1,
         text: def.defaultText,
         fontSize: def.defaultFontSize,
+        bend: def.defaultBend,
       };
       setObjects((prev) => [...prev, obj]);
       setSelectedId(obj.id);

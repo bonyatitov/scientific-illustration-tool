@@ -1,4 +1,5 @@
 import { SHAPE_MAP } from '@/lib/shape-library';
+import BentShape from './BentShape';
 import type { SceneObject } from '@/lib/editor-types';
 
 interface Props {
@@ -15,12 +16,20 @@ const ObjectView = ({ object }: Props) => {
   const outer = `translate(${object.x} ${object.y}) rotate(${object.rotation} ${cx} ${cy})`;
 
   if (def.isImported) {
+    const b = object.bend ?? 0;
     return (
       <g transform={outer} opacity={object.opacity}>
-        <g
-          transform={`scale(${object.width / 100} ${object.height / 100})`}
-          dangerouslySetInnerHTML={{ __html: object.svg ?? '' }}
-        />
+        <g transform={`scale(${object.width / 100} ${object.height / 100})`}>
+          {Math.abs(b) < 1 ? (
+            <g dangerouslySetInnerHTML={{ __html: object.svg ?? '' }} />
+          ) : (
+            <BentShape
+              def={{ ...def, render: () => <g dangerouslySetInnerHTML={{ __html: object.svg ?? '' }} /> }}
+              object={object}
+              bend={b}
+            />
+          )}
+        </g>
       </g>
     );
   }
@@ -44,10 +53,12 @@ const ObjectView = ({ object }: Props) => {
     );
   }
 
+  const bend = object.bend ?? 0;
+
   return (
     <g transform={outer} opacity={object.opacity}>
       <g transform={`scale(${object.width / 100} ${object.height / 100})`}>
-        {def.render(object)}
+        {Math.abs(bend) < 1 ? def.render(object) : <BentShape def={def} object={object} bend={bend} />}
       </g>
     </g>
   );

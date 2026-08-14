@@ -1,26 +1,12 @@
 import { useMemo, useState } from 'react';
 import Icon from '@/components/ui/icon';
-import { CATEGORIES, SHAPES, type ShapeDef } from '@/lib/shape-library';
-import type { CategoryId, SceneObject } from '@/lib/editor-types';
+import { CATEGORIES, SHAPES } from '@/lib/shape-library';
+import ShapePreview from './ShapePreview';
+import type { CategoryId } from '@/lib/editor-types';
 
 interface Props {
   onAdd: (shapeId: string) => void;
 }
-
-const preview = (def: ShapeDef): SceneObject => ({
-  id: 'preview',
-  shapeId: def.id,
-  label: def.label,
-  x: 0,
-  y: 0,
-  width: 100,
-  height: 100,
-  rotation: 0,
-  fill: def.defaultFill,
-  stroke: def.defaultStroke,
-  strokeWidth: 2,
-  opacity: 1,
-});
 
 const LibraryPanel = ({ onAdd }: Props) => {
   const [active, setActive] = useState<CategoryId>('cells');
@@ -88,9 +74,7 @@ const LibraryPanel = ({ onAdd }: Props) => {
                     {def.defaultText}
                   </span>
                 ) : (
-                  <svg viewBox="-4 -4 108 108" className="h-16 w-16">
-                    {def.render(preview(def))}
-                  </svg>
+                  <ShapePreview def={def} className="h-16 w-16" />
                 )}
               </div>
               <span className="text-[10px] leading-tight text-muted-foreground transition-colors group-hover:text-foreground">

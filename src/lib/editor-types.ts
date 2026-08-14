@@ -15,6 +15,8 @@ export interface SceneObject {
   stroke: string;
   strokeWidth: number;
   opacity: number;
+  /** изгиб по дуге в градусах: 0 — прямой, ±180 — полукруг */
+  bend?: number;
   /** только для текстовых объектов */
   text?: string;
   fontSize?: number;
@@ -67,6 +69,7 @@ export function sanitizeObject(raw: unknown, index: number): SceneObject | null 
     stroke: color(o.stroke, '#0d1117'),
     strokeWidth: num(o.strokeWidth, 2, 0, 100),
     opacity: num(o.opacity, 1, 0, 1),
+    bend: o.bend === undefined ? undefined : num(o.bend, 0, -350, 350),
     text: o.text === undefined ? undefined : str(o.text, '', 500),
     fontSize: o.fontSize === undefined ? undefined : num(o.fontSize, 20, 4, 400),
     svg:

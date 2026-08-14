@@ -9,6 +9,22 @@ export interface Bounds {
   height: number;
 }
 
+/** Насколько согнутый объект выходит за свои габариты. */
+function bendGrow(o: SceneObject) {
+  const bend = o.bend ?? 0;
+  if (Math.abs(bend) < 1) return { top: 0, bottom: 0, left: 0, right: 0 };
+  const maxRad = (1.9 * o.width) / Math.max(o.height, 1);
+  const rad = Math.max(-maxRad, Math.min(maxRad, (bend * Math.PI) / 180));
+  const R = Math.abs(o.width / rad);
+  const half = Math.abs(rad) / 2;
+  const sag = R * (1 - Math.cos(half));
+  const side = Math.abs(rad) > Math.PI ? R + o.height : Math.max(0, R * Math.sin(half) - o.width / 2);
+  const bulge = sag / 2 + o.height;
+  return rad > 0
+    ? { top: 0, bottom: bulge, left: side, right: side }
+    : { top: bulge, bottom: 0, left: side, right: side };
+}
+
 export function sceneBounds(objects: SceneObject[]): Bounds {
   if (!objects.length) return { x: 0, y: 0, width: 800, height: 600 };
   let minX = Infinity;
@@ -22,11 +38,12 @@ export function sceneBounds(objects: SceneObject[]): Bounds {
     const rad = (o.rotation * Math.PI) / 180;
     const cos = Math.cos(rad);
     const sin = Math.sin(rad);
+    const g = bendGrow(o);
     const corners = [
-      [o.x, o.y],
-      [o.x + o.width, o.y],
-      [o.x, o.y + o.height],
-      [o.x + o.width, o.y + o.height],
+      [o.x - g.left, o.y - g.top],
+      [o.x + o.width + g.right, o.y - g.top],
+      [o.x - g.left, o.y + o.height + g.bottom],
+      [o.x + o.width + g.right, o.y + o.height + g.bottom],
     ];
     corners.forEach(([px, py]) => {
       const dx = px - cx;

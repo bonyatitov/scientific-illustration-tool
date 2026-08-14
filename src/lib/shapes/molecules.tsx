@@ -79,6 +79,56 @@ export const MOLECULE_SHAPES: ShapeDef[] = [
     ),
   },
   {
+    id: 'mol-bilayer-arc',
+    label: 'Бислой дугой',
+    category: 'molecules',
+    defaultWidth: 340,
+    defaultHeight: 110,
+    defaultFill: 'none',
+    defaultStroke: '#f2b544',
+    defaultBend: -150,
+    render: (o) => (
+      <>
+        {Array.from({ length: 11 }).map((_, i) => {
+          const x = 6 + i * 8.8;
+          return (
+            <g key={i}>
+              <circle cx={x} cy="14" r="5" fill={o.stroke} />
+              <path d={`M${x - 2} 20 V44 M${x + 2} 20 V44`} {...line(o)} />
+              <circle cx={x} cy="86" r="5" fill={o.stroke} />
+              <path d={`M${x - 2} 80 V56 M${x + 2} 80 V56`} {...line(o)} />
+            </g>
+          );
+        })}
+      </>
+    ),
+  },
+  {
+    id: 'mol-bilayer-ring',
+    label: 'Бислой кольцом',
+    category: 'molecules',
+    defaultWidth: 460,
+    defaultHeight: 90,
+    defaultFill: 'none',
+    defaultStroke: '#f2b544',
+    defaultBend: 350,
+    render: (o) => (
+      <>
+        {Array.from({ length: 11 }).map((_, i) => {
+          const x = 6 + i * 8.8;
+          return (
+            <g key={i}>
+              <circle cx={x} cy="14" r="5" fill={o.stroke} />
+              <path d={`M${x - 2} 20 V44 M${x + 2} 20 V44`} {...line(o)} />
+              <circle cx={x} cy="86" r="5" fill={o.stroke} />
+              <path d={`M${x - 2} 80 V56 M${x + 2} 80 V56`} {...line(o)} />
+            </g>
+          );
+        })}
+      </>
+    ),
+  },
+  {
     id: 'mol-atp',
     label: 'АТФ',
     category: 'molecules',
