@@ -167,7 +167,7 @@ const Hero = () => {
           <em>а не за вечер</em>
         </h1>
         <p className="hero-lead">
-          {SHAPES.length}&nbsp;элементов: клетки, молекулы, лабораторная посуда, стрелки. Тянете мышью, меняете заливку, выгружаете PNG или&nbsp;SVG для статьи.
+          {SHAPES.length}&nbsp;элементов: клетки, молекулы, лабораторная посуда, стрелки и&nbsp;греческие символы. Тянете мышью, меняете заливку, выгружаете PNG или&nbsp;SVG для статьи.
         </p>
         <div className="hero-act">
           <a href="#canvas" onClick={(e) => scrollTo(e, '#canvas')} className="hero-btn">

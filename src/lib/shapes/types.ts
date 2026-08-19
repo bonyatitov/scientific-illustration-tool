@@ -16,6 +16,8 @@ export interface ShapeDef {
   defaultBend?: number;
   defaultText?: string;
   defaultFontSize?: number;
+  /** курсивное начертание по умолчанию */
+  defaultItalic?: boolean;
   /** отрисовка в системе координат 0..100 × 0..100 */
   render: (o: SceneObject) => ReactNode;
 }
@@ -33,6 +35,7 @@ export const CATEGORIES: CategoryDef[] = [
   { id: 'lab', label: 'Лаборатория', icon: 'FlaskConical', hint: 'Посуда и приборы' },
   { id: 'arrows', label: 'Стрелки / Связи', icon: 'MoveRight', hint: 'Потоки и ингибирование' },
   { id: 'text', label: 'Текст', icon: 'Type', hint: 'Подписи и заголовки' },
+  { id: 'symbols', label: 'Символы', icon: 'Sigma', hint: 'Греческий алфавит и знаки' },
   { id: 'shapes', label: 'Фигуры', icon: 'Shapes', hint: 'Базовая геометрия' },
 ];
 

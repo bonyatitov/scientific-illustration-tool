@@ -1,6 +1,14 @@
 import { sanitizeSvgMarkup } from './import-svg';
 
-export type CategoryId = 'cells' | 'molecules' | 'lab' | 'arrows' | 'text' | 'shapes' | 'imported';
+export type CategoryId =
+  | 'cells'
+  | 'molecules'
+  | 'lab'
+  | 'arrows'
+  | 'text'
+  | 'symbols'
+  | 'shapes'
+  | 'imported';
 
 export interface SceneObject {
   id: string;
@@ -20,6 +28,8 @@ export interface SceneObject {
   /** только для текстовых объектов */
   text?: string;
   fontSize?: number;
+  /** курсивное начертание — для греческих букв и переменных */
+  italic?: boolean;
   /** только для импортированных SVG (ChemDraw и т.п.) — очищенная разметка */
   svg?: string;
 }
@@ -72,6 +82,7 @@ export function sanitizeObject(raw: unknown, index: number): SceneObject | null 
     bend: o.bend === undefined ? undefined : num(o.bend, 0, -350, 350),
     text: o.text === undefined ? undefined : str(o.text, '', 500),
     fontSize: o.fontSize === undefined ? undefined : num(o.fontSize, 20, 4, 400),
+    italic: o.italic === undefined ? undefined : Boolean(o.italic),
     svg:
       typeof o.svg === 'string' && o.svg.length <= 400000
         ? sanitizeSvgMarkup(o.svg)

@@ -45,6 +45,7 @@ const ObjectView = ({ object }: Props) => {
           fill={object.fill}
           fontFamily="Inter, sans-serif"
           fontSize={size}
+          fontStyle={object.italic ? 'italic' : 'normal'}
           fontWeight={size >= 30 ? 500 : 400}
         >
           {object.text ?? ''}

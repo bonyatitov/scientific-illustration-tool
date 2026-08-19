@@ -234,6 +234,19 @@ const PropertiesPanel = ({ editor }: Props) => {
                 suffix="px"
               />
             </Row>
+            <Row label="Начертание">
+              <button
+                type="button"
+                onClick={() => updateObject(selected.id, { italic: !selected.italic })}
+                className={`h-8 w-full border text-sm italic transition-colors ${
+                  selected.italic
+                    ? 'border-primary bg-primary/10 text-primary'
+                    : 'border-border text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                Курсив
+              </button>
+            </Row>
           </div>
         )}
 

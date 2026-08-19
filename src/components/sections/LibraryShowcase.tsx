@@ -60,7 +60,10 @@ const LibraryShowcase = () => {
               >
                 <div className="flex h-24 w-full items-center justify-center">
                   {def.isText ? (
-                    <span className="text-center text-sm" style={{ color: def.defaultFill }}>
+                    <span
+                      className={`text-center ${def.category === 'symbols' ? 'text-5xl' : 'text-sm'}`}
+                      style={{ color: def.defaultFill, fontStyle: def.defaultItalic ? 'italic' : 'normal' }}
+                    >
                       {def.defaultText}
                     </span>
                   ) : (

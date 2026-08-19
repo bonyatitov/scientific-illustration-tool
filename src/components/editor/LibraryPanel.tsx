@@ -14,9 +14,14 @@ const LibraryPanel = ({ onAdd }: Props) => {
 
   const list = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (q) return SHAPES.filter((s) => s.label.toLowerCase().includes(q));
+    if (q)
+      return SHAPES.filter(
+        (s) => s.label.toLowerCase().includes(q) || (s.defaultText ?? '').toLowerCase().includes(q),
+      );
     return SHAPES.filter((s) => s.category === active);
   }, [active, query]);
+
+  const compact = !query && active === 'symbols';
 
   return (
     <aside className="flex h-full w-[268px] shrink-0 flex-col border-r border-border bg-card">
@@ -57,19 +62,24 @@ const LibraryPanel = ({ onAdd }: Props) => {
       </div>
 
       <div className="min-h-0 flex-1 overflow-y-auto p-3">
-        <div className="grid grid-cols-2 gap-2">
+        <div className={`grid gap-2 ${compact ? 'grid-cols-4' : 'grid-cols-2'}`}>
           {list.map((def) => (
             <button
               key={def.id}
               type="button"
               onClick={() => onAdd(def.id)}
-              className="group flex flex-col items-center gap-2 border border-border bg-background p-2 transition-all hover:border-primary hover:bg-secondary"
+              title={def.label}
+              className={`group flex flex-col items-center border border-border bg-background transition-all hover:border-primary hover:bg-secondary ${
+                compact ? 'gap-0.5 p-1.5' : 'gap-2 p-2'
+              }`}
             >
-              <div className="flex h-16 w-full items-center justify-center">
+              <div className={`flex w-full items-center justify-center ${compact ? 'h-9' : 'h-16'}`}>
                 {def.isText ? (
                   <span
-                    className="text-center text-xs leading-tight text-foreground"
-                    style={{ color: def.defaultFill }}
+                    className={`text-center leading-none text-foreground ${
+                      def.category === 'symbols' ? 'text-[30px]' : 'text-xs leading-tight'
+                    }`}
+                    style={{ color: def.defaultFill, fontStyle: def.defaultItalic ? 'italic' : 'normal' }}
                   >
                     {def.defaultText}
                   </span>
@@ -77,7 +87,11 @@ const LibraryPanel = ({ onAdd }: Props) => {
                   <ShapePreview def={def} className="h-16 w-16" />
                 )}
               </div>
-              <span className="text-[10px] leading-tight text-muted-foreground transition-colors group-hover:text-foreground">
+              <span
+                className={`w-full truncate text-center leading-tight text-muted-foreground transition-colors group-hover:text-foreground ${
+                  compact ? 'text-[8px]' : 'text-[10px]'
+                }`}
+              >
                 {def.label}
               </span>
             </button>
